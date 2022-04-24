@@ -25,7 +25,7 @@ def GetRandomBody():
 	return body
 
 def GenerateRandomAttatch():
-	size = random.randint(1000,50000000) #Generate random binary file from 1KB-50MB
+	size = random.randint(1000,30000000) #Generate random binary file from 1KB-30MB
 	filename = "attatch.bin"
 	with open(filename,'wb') as fout:
 		fout.write(os.urandom(size))
@@ -55,9 +55,12 @@ def SmtpSend():
 	msg['Subject'] = subject
 	msg['Bcc'] = receiver_formatted
 	msg.attach(MIMEText(body,"plain"))
-	GenerateRandomAttatch()
-	FileToAttatch = ReadGeneratedFile()
-	msg.attach(FileToAttatch)
+	attatchfile = random.randint(0,1) #50% chancea file is attatched to the email
+	if attatchfile == 1:
+		print("attatching file")
+		GenerateRandomAttatch()
+		FileToAttatch = ReadGeneratedFile()
+		msg.attach(FileToAttatch)
 	text = msg.as_string()
 	#send email
 	server = smtplib.SMTP('mail.mylab.local',465)
@@ -116,7 +119,7 @@ def POPGetMail():
 def SMTPWhile():
 	while True:
 		SMTPWait = random.randint(60,600) #Currently between 1-10M send an email.
-		sleep(SMTPWait)
+		#sleep(SMTPWait)
 		print("SendingEmail")
 		SmtpSend()
 
