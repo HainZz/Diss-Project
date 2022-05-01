@@ -15,7 +15,7 @@ from multiprocessing import Process
 
 
 #NOTE: MAKE SURE TO CHANGE EMAIL's IN VARIABLES
-USER_EMAIL = "ubuntu1@mylab.local"
+USER_EMAIL = "windows1@mylab.local"
 
 #Generates Random Body For Email
 #Important to generate emails of varying size for a more "realistic" enviroment
@@ -45,7 +45,7 @@ def SmtpSend():
 	subject = "Email To Generate SMTP Traffic"
 	body = GetRandomBody() #Get body text
 	sender = USER_EMAIL
-	Receiver_List = ["windows1@mylab.local"]
+	Receiver_List = ["ubuntu1@mylab.local"]
 	receiver = random.choices(Receiver_List,k=len(Receiver_List)) #Get Random List Of Receivers. Sending mail to 1 or more Inboxes
 	#Create multipart message with proper email headers
 	receiver_formatted = ", ".join(receiver)
@@ -118,13 +118,15 @@ def POPGetMail():
 
 def SMTPWhile():
 	while True:
+		print("SMTP Process Started")
 		SMTPWait = random.randint(60,600) #Currently between 1-10M send an email.
-		#sleep(SMTPWait)
+		sleep(SMTPWait)
 		print("SendingEmail")
 		SmtpSend()
 
 def IMAP_POP3_While():
 	while True:
+		print("Inbox Process Started")
 		InboxWait = random.randint(60,1800) #Pseudorandom interval between 1-30M access inbox
 		sleep(InboxWait)
 		ProtoChoice = random.randint(0,1)
@@ -140,8 +142,9 @@ def main():
 	p.start()
 	SMTPWhile()
 
-
-main()
+if __name__ == '__main__':
+	#freeze_support()
+	main()
 
 
 
