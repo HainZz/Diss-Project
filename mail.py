@@ -45,7 +45,7 @@ def SmtpSend():
 	subject = "Email To Generate SMTP Traffic"
 	body = GetRandomBody() #Get body text
 	sender = USER_EMAIL
-	Receiver_List = ["ubuntu1@mylab.local"]
+	Receiver_List = ["ubuntu1@mylab.local"] #All valid email adresses excluding the machines email
 	receiver = random.choices(Receiver_List,k=len(Receiver_List)) #Get Random List Of Receivers. Sending mail to 1 or more Inboxes
 	#Create multipart message with proper email headers
 	receiver_formatted = ", ".join(receiver)
