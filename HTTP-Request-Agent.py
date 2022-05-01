@@ -81,6 +81,7 @@ def main():
             if len(InternalURLList) != 0:
                 for y in range(InternalUrlCount):
                   url = random.choice(InternalURLList)
+                  print("INTERNAL-URL-CHECKED")
                   print(url)
                   InternalURLList.remove(url)
                   soup = GetPageContent(url,driver) #Perform Request
