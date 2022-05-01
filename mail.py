@@ -90,7 +90,7 @@ def IMAPGetMail():
 		except imaplib.IMAP4.error:
 			print("Caught Deletion Error")
 			break
-	#Perma delete emails and log out. 
+	#Perma delete emails and log out.
 	server.expunge()
 	server.close()
 	server.logout()
