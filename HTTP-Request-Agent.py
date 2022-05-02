@@ -61,7 +61,7 @@ def main():
     driver = SetupWebDriver()
     while True: #Run Request agent permanently until manual cancel
         RequestTimeout = random.randrange(120,300) #"Browsing Events" are made at an interval between 2-5 mins. 
-        #sleep(RequestTimeout)
+        sleep(RequestTimeout)
         ExternalUrlCount = random.randrange(1,3) #Number of External URL to visit this repersents the number of pages an workstation might visit during a single "browsing event"
         print(ExternalUrlCount)
         for x in range(ExternalUrlCount):
@@ -75,7 +75,10 @@ def main():
             InternalURLList = []
             InternalUrlCount = random.randint(1,5) #Number of Internal URL's to visit on a single External URL. This tries to repersent browsing an individual website before moving onto another.
             print(url)
-            soup = GetPageContent(url,driver)
+            try:
+                soup = GetPageContent(url,driver) #General catch to avoid program quitting on any bad URLs. 
+            except Exception as e:
+                continue
             sleep(20)
             InternalURLList = GetURLs(url,soup,InternalURLList)
             if len(InternalURLList) != 0:
@@ -84,7 +87,10 @@ def main():
                   print("INTERNAL-URL-CHECKED")
                   print(url)
                   InternalURLList.remove(url)
-                  soup = GetPageContent(url,driver) #Perform Request
+                  try:
+                      soup = GetPageContent(url,driver) #Perform Request
+                  except Exception as e:
+                      continue
                   InternalURLList = GetURLs(url,soup,InternalURLList)
                   if len(InternalURLList) == 0: #If we ever in rare cases visit a website with no internal links or run out of new internal links to follow 
                      break
