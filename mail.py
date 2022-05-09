@@ -127,7 +127,7 @@ def SMTPWhile():
 def IMAP_POP3_While():
 	while True:
 		print("Inbox Process Started")
-		InboxWait = random.randint(60,1800) #Pseudorandom interval between 1-30M access inbox
+		InboxWait = random.randint(60,900) #Pseudorandom interval between 1-30M access inbox
 		sleep(InboxWait)
 		ProtoChoice = random.randint(0,1)
 		if ProtoChoice == 0:
