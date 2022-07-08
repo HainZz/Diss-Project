@@ -53,7 +53,7 @@ def GetURLs(url,soup,InternalURLs):
 def main():
     while True: #Run Request agent permanently until manual cancel
         RequestTimeout = random.randrange(120,300) #"Browsing Events" are made at an interval between 2-5 mins.
-        #sleep(RequestTimeout)
+        sleep(RequestTimeout)
         ExternalUrlCount = random.randrange(1,3) #Number of External URL to visit this repersents the number of pages an workstation might visit during a single "browsing event"
         print(ExternalUrlCount)
         for x in range(ExternalUrlCount):
@@ -67,18 +67,26 @@ def main():
             InternalURLList = []
             InternalUrlCount = random.randint(1,5) #Number of Internal URL's to visit on a single External URL. This tries to repersent browsing an individual website before moving onto another.
             print(url)
-            soup = GetPageContent(url)
+            try:
+                soup = GetPageContent(url)
+            except Exception as e:
+                continue
             InternalURLList = GetURLs(url,soup,InternalURLList)
+            sleep(20)
             if len(InternalURLList) != 0:
                 for y in range(InternalUrlCount):
                   url = random.choice(InternalURLList)
                   print("INTERNAL-URL-CHECKED")
+                  InternalURLList.remove(url)
                   print(url)
-                  soup = GetPageContent(url) #Perform Request
-                  sleep(5)
+                  try:
+                      soup = GetPageContent(url) #Perform Request
+                  except Exception as e:
+                     InternalURLList.remove(url)
+                     continue
                   InternalURLList = GetURLs(url,soup,InternalURLList)
                   if len(InternalURLList) == 0: #If we ever in rare cases visit a website with no internal links return a bool breaking out of
                      break
-                sleep(5)
+                sleep(20)
 
 main()
